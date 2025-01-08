@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Policy</title>
+    <style>
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            background-color: #0277bd;
+            color: white;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: #e3f2fd;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            color: #004b8d;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.75rem;
+        }
+
+        h4 {
+            font-size: 1.5rem;
+        }
+
+        h5 {
+            font-size: 1.25rem;
+        }
+
+        /* Left-align the h2 tag for General Information */
+        .left-align {
+            text-align: left;
+        }
+
+        /* Upper Panel Styles */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            background: #ffffff;
+            padding: 20px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            border-radius: 8px;
+            width: 95%;
+        }
+
+        .upper-panel img.logo {
+            width: 120px;
+            height: auto;
+        }
+
+        .upper-panel img.second-logo {
+            width: 100px;
+            height: auto;
+        }
+        select {
+            min-width: 40px;
+            max-width: 100%;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            border: 1px solid #b0d6ff;
+            background-color: #ffffff;
+        }
+        .container{
+            display: flex;
+            flex-direction: column;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            margin: 0 30px;
+            max-width: 100%;
+        }
+        /* Table for ANWB Baseline and Exception */
+        table {
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            padding: 5px;
+            text-align: center;
+            font-size: 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        table th {
+            background-color: #e3f2fd;
+            font-weight: 600;
+        }
+        table td {
+            text-align: left;
+            vertical-align:top;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <header class="upper-panel">
+        <a href="/home" style="cursor: pointer;"><img src="static/cloudhub.png" alt="Logo" class="logo"></a>
+        <h1>AWS Policy</h1>
+    </header>
+
+    <div class="container">
+        <a href="/home" style='float:right'>Home</a>
+        <h3>Application Name : {{ app_name }}</h3>  
+        <form action="/submit-selections" method="POST">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Control ID</th>
+                        <th>Control Description</th>
+                        <th>AWS Config Rule</th>
+                        <th>Guidance</th>
+                        <th>Enabled<input type="checkbox" id="select-all-checkbox">(Select All)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in table_data %}
+                        <tr>
+                            <td>{{ row.Control_ID }}</td>
+                            <td>{{ row.Control_Description }}</td>
+                            <td>{{ row.AWS_Config_Rule }}</td>
+                            <td>{{ row.Guidance }}</td>
+                            <td>
+                                <input type="checkbox" name="selected_controls" value="{{loop.index0}}">
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+<script>
+    var selectAllCheckbox = document.getElementById("select-all-checkbox");
+    selectAllCheckbox.addEventListener("click", selectAllCheckboxClicked);
+
+    function selectAllCheckboxClicked() {
+        var checkboxes = document.querySelectorAll("input[type='checkbox']:not(#select-all-checkbox)");
+
+        for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = selectAllCheckbox.checked;
+        }
+    }
+</script>
+</html>

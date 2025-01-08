@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classification Result</title>
+    <style>
+        button {
+            width: 40%;
+            padding: 10px;
+            background-color: #00a2ed;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .login-container button:hover {
+            background-color: #0078d7;
+        }
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f0f9ff, #e1eff9);
+            color: #34495e; /* Dark gray text for contrast */
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            padding: 20px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            border-radius: 8px;
+            min-width: 95%;
+        }
+
+        .logo {
+            width: 120px; /* Set to match the logo size from the first code */
+            height: auto;
+        }
+
+        header h1 {
+            font-size: 30px;
+            color: #0077cc;
+            margin: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 3rem auto;
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #000000;
+            font-size: 1.6rem;
+        }
+
+        .classification {
+            color: #e74c3c; /* Red for emphasis */
+            font-weight: bold;
+        }
+
+        /* Updated this class to match h1 size */
+        .application-name {
+            color: #0077cc; /* Blue for application name */
+            font-weight: bold;
+            font-size: 1.6rem; /* Same as h1 */
+            margin-bottom: 1rem;
+        }
+
+        section {
+            margin-top: 2rem;
+        }
+
+        h2 {
+            color: #2980b9; /* Lighter blue for section headings */
+            border-bottom: 3px solid #00aaff;
+            padding-bottom: 0.5rem;
+            font-size: 1.4rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        ul li {
+            background: #d1e7f7; /* Soft light blue for list items */
+            margin: 0.75rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 1rem 0;
+            background: #49a4ff; /* Dark gray-blue footer */
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="static/cloudhub.png" alt="Main Logo" class="logo">
+        <h1>Change Assessment Result</h1>
+    </header>
+    <main>
+        <!-- Application Name now has the same size as h1 -->
+        <p class="application-name">Application Name: {{ app_name }}</p> <!-- Application name updated and resized -->
+        
+        <h1>CLASSIFICATION: <span class="classification">{{ classification }}</span></h1>
+        <p>This classification requires comprehensive evaluation and documentation to ensure compliance and maintain system integrity.</p>
+
+        <section>
+            <h2>Impact Classification Criteria</h2>
+            <p>The following documentation is required based on the impact type:</p>
+
+            <h3>For {{ classification }}:</h3>
+            <ul>
+                {% for a in matched_classification%}
+                <li>{{a}}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <button type='button' onclick="document.location.href='aws-controls?app_name={{app_name}}&classification={{classification}}';">View AWS Controls</button>
+
+        <section>
+            <h2>Summary</h2>
+            <p>Minor Changes require focused but less extensive documentation and assessments. Major Changes demand thorough validation, qualification, and user testing to maintain compliance and ensure system integrity.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Compliance Documentation Solutions</p>
+    </footer>
+</body>
+</html>
